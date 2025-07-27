@@ -2,7 +2,10 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Screens/checkout_screen.dart';
+import 'package:food_delivery_app/Screens/profile_screen.dart';
 import 'package:food_delivery_app/core/utils/asset_image.dart';
+import 'package:food_delivery_app/core/utils/functions/app_route.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,7 +21,9 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              AppRoute.navigateTo(CheckoutScreen());
+            },
             icon: Icon(Icons.shopping_cart_outlined),
           ),
         ],
