@@ -2,7 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/checkout_screen.dart';
+import 'package:food_delivery_app/Screens/navigation_bar.dart';
 import 'package:food_delivery_app/core/utils/asset_image.dart';
 import 'package:food_delivery_app/core/functions/app_route.dart';
 import 'package:food_delivery_app/core/widgets/custom_button.dart';
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              AppRoute.navigateTo(CheckoutScreen());
+              AppRoute.navigateTo(MainNavigation(index: 1));
             },
             icon: Icon(Icons.shopping_cart_outlined),
           ),

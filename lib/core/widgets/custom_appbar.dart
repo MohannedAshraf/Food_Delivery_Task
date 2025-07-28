@@ -21,7 +21,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           SizedBox(width: DeviceWidthHeight.perentageOfWidth(105)),
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.w700),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             textAlign: TextAlign.center,
           ),
         ],
