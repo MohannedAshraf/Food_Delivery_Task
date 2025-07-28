@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/core/utils/functions/app_route.dart';
-import 'package:food_delivery_app/core/utils/functions/app_size.dart';
+import 'package:food_delivery_app/core/functions/app_route.dart';
+import 'package:food_delivery_app/core/functions/app_size.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

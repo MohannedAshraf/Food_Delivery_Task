@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/core/utils/asset_image.dart';
-import 'package:food_delivery_app/core/utils/functions/app_size.dart';
+import 'package:food_delivery_app/core/functions/app_size.dart';
 
 class ProfileScreenBody extends StatelessWidget {
   const ProfileScreenBody({super.key});

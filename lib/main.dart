@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/home_screen.dart';
+import 'package:food_delivery_app/Screens/navigation_bar.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: MainNavigation(),
     );
   }
 }

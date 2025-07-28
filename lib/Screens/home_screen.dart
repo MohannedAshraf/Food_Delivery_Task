@@ -3,12 +3,21 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/checkout_screen.dart';
-import 'package:food_delivery_app/Screens/profile_screen.dart';
 import 'package:food_delivery_app/core/utils/asset_image.dart';
-import 'package:food_delivery_app/core/utils/functions/app_route.dart';
+import 'package:food_delivery_app/core/functions/app_route.dart';
+import 'package:food_delivery_app/core/widgets/custom_button.dart';
+import 'package:food_delivery_app/core/widgets/grid_view.dart';
+import 'package:food_delivery_app/core/widgets/list_view.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isListSelected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +55,14 @@ class HomeScreen extends StatelessWidget {
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: Colors.grey.withOpacity(0.1), // رصاصي خفيف جدًا
+                      color: Colors.grey.withOpacity(0.1),
                       width: 1,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: Colors.grey.withOpacity(
-                        0.1,
-                      ), // نفس اللون عند التركيز
+                      color: Colors.grey.withOpacity(0.1),
                       width: 1,
                     ),
                   ),
@@ -89,7 +96,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 15),
             CarouselSlider(
               options: CarouselOptions(
-                autoPlay: false,
+                autoPlay: true,
                 height: 250,
                 viewportFraction: 1,
               ),
@@ -128,6 +135,68 @@ class HomeScreen extends StatelessWidget {
               "Featured Items",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
+            const SizedBox(height: 15),
+            // Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CustomButton(
+                  text: "List View",
+                  isselected: isListSelected,
+                  onTap: () {
+                    setState(() {
+                      isListSelected = true;
+                    });
+                  },
+                ),
+                const SizedBox(width: 5),
+                CustomButton(
+                  text: "Grid View",
+                  isselected: !isListSelected,
+                  onTap: () {
+                    setState(() {
+                      isListSelected = false;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // View Switcher
+            Expanded(
+              child:
+                  isListSelected
+                      ? ListView.separated(
+                        itemCount: items1.length,
+                        separatorBuilder:
+                            (context, index) => const SizedBox(height: 10),
+                        itemBuilder: (context, index) {
+                          return CustomListView(
+                            image: items1[index]['image']!,
+                            text1: items1[index]['title']!,
+                            text2: items1[index]['subtitle']!,
+                          );
+                        },
+                      )
+                      : GridView.builder(
+                        itemCount: items1.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 2 / 3,
+                            ),
+                        itemBuilder: (context, index) {
+                          return CustomGridView(
+                            image: items1[index]['image']!,
+                            text1: items1[index]['title']!,
+                            text2: items1[index]['subtitle']!,
+                          );
+                        },
+                      ),
+            ),
           ],
         ),
       ),
@@ -139,4 +208,37 @@ final List<Map<String, String>> items = [
   {'image': Myimages.burger, 'text': "burger"},
   {'image': Myimages.nescalop, 'text': "nescalop"},
   {'image': Myimages.sandwitch, 'text': "sandwitch"},
+];
+
+List<Map<String, String>> items1 = [
+  {
+    'image': Myimages.burger,
+    'title': "Burger",
+    'subtitle': 'description for Burger',
+  },
+  {
+    'image': Myimages.nescalop,
+    'title': 'Nescalop',
+    'subtitle': 'description for Nescalop',
+  },
+  {
+    'image': Myimages.sandwitch,
+    'title': 'Sandwitch',
+    'subtitle': 'description for Sandwitch',
+  },
+  {
+    'image': Myimages.burger,
+    'title': "Burger",
+    'subtitle': 'description for Burger',
+  },
+  {
+    'image': Myimages.nescalop,
+    'title': 'Nescalop',
+    'subtitle': 'description for Nescalop',
+  },
+  {
+    'image': Myimages.sandwitch,
+    'title': 'Sandwitch',
+    'subtitle': 'description for Sandwitch',
+  },
 ];
