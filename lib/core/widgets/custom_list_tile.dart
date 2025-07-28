@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/core/utils/asset_image.dart';
-import 'package:food_delivery_app/core/functions/app_size.dart';
 
 class CustomlistTile extends StatelessWidget {
   final String image;
@@ -12,6 +10,7 @@ class CustomlistTile extends StatelessWidget {
   final double height;
   final bool subtitlecheck;
   final bool showActionButtons;
+
   const CustomlistTile({
     super.key,
     required this.image,
@@ -27,26 +26,27 @@ class CustomlistTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      padding: EdgeInsets.all(DeviceWidthHeight.perentageOfWidth(8)),
-      height: DeviceWidthHeight.perentageOfHeight(height),
+      padding: EdgeInsets.all(screenWidth * 0.021),
+      height: screenHeight * (height / 812),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: DeviceWidthHeight.perentageOfWidth(width),
+            width: screenWidth * (width / 375),
             height: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                DeviceWidthHeight.perentageOfWidth(radius),
-              ),
+              borderRadius: BorderRadius.circular(screenWidth * (radius / 375)),
               image: DecorationImage(
-                image: AssetImage(Myimages.burger),
+                image: AssetImage(image),
                 fit: BoxFit.fill,
               ),
             ),
           ),
-          SizedBox(width: DeviceWidthHeight.perentageOfWidth(16)),
+          SizedBox(width: screenWidth * (16 / 375)),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -54,9 +54,12 @@ class CustomlistTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
                 ),
-                SizedBox(height: DeviceWidthHeight.perentageOfHeight(4)),
+                SizedBox(height: screenHeight * (4 / 812)),
                 Text(
                   subtitle,
                   style: TextStyle(
@@ -80,31 +83,31 @@ class CustomlistTile extends StatelessWidget {
           if (showActionButtons)
             Row(
               children: [
-                _actionButton(Icon(Icons.minimize_sharp), () {}),
-
-                Text("  1  "),
-                _actionButton(Icon(Icons.add), () {}),
+                _actionButton(context, const Icon(Icons.minimize_sharp), () {}),
+                const Text("  1  "),
+                _actionButton(context, const Icon(Icons.add), () {}),
               ],
             ),
         ],
       ),
     );
   }
-}
 
-Widget _actionButton(Widget icon, Function()? ontap) {
-  return GestureDetector(
-    onTap: () => ontap,
-    child: Container(
-      width: DeviceWidthHeight.perentageOfWidth(35),
-      height: DeviceWidthHeight.perentageOfHeight(40),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 241, 202, 206),
-        borderRadius: BorderRadius.circular(
-          DeviceWidthHeight.perentageOfWidth(15),
+  Widget _actionButton(BuildContext context, Widget icon, Function()? ontap) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return GestureDetector(
+      onTap: () => ontap?.call(),
+      child: Container(
+        width: screenWidth * (35 / 375),
+        height: screenHeight * (40 / 812),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 241, 202, 206),
+          borderRadius: BorderRadius.circular(screenWidth * (15 / 375)),
         ),
+        child: Center(child: icon),
       ),
-      child: Center(child: icon),
-    ),
-  );
+    );
+  }
 }

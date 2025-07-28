@@ -2,50 +2,63 @@
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/core/utils/asset_image.dart';
-import 'package:food_delivery_app/core/functions/app_size.dart';
 
 class ProfileScreenBody extends StatelessWidget {
   const ProfileScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
+
+    double getWidth(double wdt) {
+      const designWidth = 375;
+      return (wdt * screenWidth) / designWidth;
+    }
+
+    double getHeight(double hgt) {
+      const designHeight = 812;
+      return (hgt * screenHeight) / designHeight;
+    }
+
     return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: DeviceWidthHeight.perentageOfHeight(30)),
+          SizedBox(height: getHeight(30)),
           SizedBox(
-            width: DeviceWidthHeight.perentageOfWidth(150),
-            height: DeviceWidthHeight.perentageOfHeight(150),
+            width: getWidth(150),
+            height: getHeight(150),
             child: CircleAvatar(
-              backgroundImage: AssetImage(Myimages.burger),
+              backgroundImage: AssetImage(Myimages.myphoto),
               radius: 20,
               backgroundColor: Colors.amberAccent,
             ),
           ),
-          SizedBox(height: DeviceWidthHeight.perentageOfHeight(10)),
-          Text(
-            "Mostafa AbdallaH",
+          SizedBox(height: getHeight(10)),
+          const Text(
+            "Mohanned Ashraf",
             style: TextStyle(fontWeight: FontWeight.w900),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: DeviceWidthHeight.perentageOfHeight(5)),
+          SizedBox(height: getHeight(5)),
           Text(
-            "mostafaabdallah686@gamil.com",
+            "mohannedashraf@gamil.com",
             style: TextStyle(
               fontWeight: FontWeight.w300,
               color: Colors.red[300],
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: DeviceWidthHeight.perentageOfHeight(30)),
+          SizedBox(height: getHeight(30)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red[50]),
             onPressed: () {
-              print(">>>>>>>i am out<<<<<<<<< ");
+              print("iam out ");
             },
-            child: Text("Log out"),
+            child: const Text("Log out"),
           ),
         ],
       ),

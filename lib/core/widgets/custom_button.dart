@@ -14,15 +14,18 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     Color color = isselected ? Colors.grey.shade400 : Colors.red;
     Color textcolor = isselected ? Colors.black : Colors.white;
 
     return Container(
-      height: 40,
-      width: 177.5,
+      height: screenHeight * 0.05,
+      width: screenWidth * 0.45,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(screenWidth * 0.08),
       ),
       child: TextButton(
         onPressed: onTap,
@@ -30,7 +33,7 @@ class CustomButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: textcolor,
-            fontSize: 15,
+            fontSize: screenWidth * 0.04,
             fontWeight: FontWeight.bold,
           ),
         ),

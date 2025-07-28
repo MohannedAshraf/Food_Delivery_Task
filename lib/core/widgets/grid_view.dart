@@ -16,15 +16,19 @@ class CustomGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      height: 300,
-      width: 150,
+      height: screenHeight * 0.4, // حوالي 40% من ارتفاع الشاشة
+      width: screenWidth * 0.4, // حوالي 40% من عرض الشاشة
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 150,
+            height: screenHeight * 0.2,
+            width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
@@ -33,24 +37,27 @@ class CustomGridView extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: screenHeight * 0.01),
           Text(
             text1,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 17,
+              fontSize: screenWidth * 0.04,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: screenHeight * 0.005),
           Text(
             text2,
-            style: TextStyle(color: Colors.red.shade300, fontSize: 13),
+            style: TextStyle(
+              color: Colors.red.shade300,
+              fontSize: screenWidth * 0.03,
+            ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: screenHeight * 0.01),
           Container(
             width: double.infinity,
-            height: 30,
+            height: screenHeight * 0.04,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.grey.shade400,
@@ -59,9 +66,12 @@ class CustomGridView extends StatelessWidget {
               onPressed: () {
                 print("Added to cart");
               },
-              child: const Text(
+              child: Text(
                 "Add to cart",
-                style: TextStyle(color: Colors.black, fontSize: 12),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: screenWidth * 0.03,
+                ),
               ),
             ),
           ),

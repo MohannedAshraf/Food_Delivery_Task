@@ -16,17 +16,20 @@ class CustomListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(8),
+      margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+      padding: EdgeInsets.all(screenWidth * 0.02),
       decoration: BoxDecoration(
         color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(screenWidth * 0.025),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade300,
-            blurRadius: 5,
-            offset: Offset(0, 2),
+            blurRadius: screenWidth * 0.015,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -35,17 +38,17 @@ class CustomListView extends StatelessWidget {
         children: [
           // Image container
           Container(
-            width: 80,
-            height: 80,
+            width: screenWidth * 0.2,
+            height: screenWidth * 0.2,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(screenWidth * 0.02),
               image: DecorationImage(
                 image: AssetImage(image),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: screenWidth * 0.025),
 
           // Texts and button
           Expanded(
@@ -54,16 +57,19 @@ class CustomListView extends StatelessWidget {
               children: [
                 Text(
                   text1,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 17,
+                    fontSize: screenWidth * 0.045,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: screenHeight * 0.005),
                 Text(
                   text2,
-                  style: TextStyle(color: Colors.red.shade300, fontSize: 13),
+                  style: TextStyle(
+                    color: Colors.red.shade300,
+                    fontSize: screenWidth * 0.035,
+                  ),
                 ),
               ],
             ),
@@ -71,22 +77,25 @@ class CustomListView extends StatelessWidget {
 
           // Add to cart button
           SizedBox(
-            height: 30,
-            width: 100,
+            height: screenHeight * 0.04,
+            width: screenWidth * 0.25,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Colors.grey.shade300,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.02),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
               ),
               onPressed: () {
                 print("Added to cart");
               },
-              child: const Text(
+              child: Text(
                 "Add to cart",
-                style: TextStyle(color: Colors.black, fontSize: 12),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: screenWidth * 0.03,
+                ),
               ),
             ),
           ),

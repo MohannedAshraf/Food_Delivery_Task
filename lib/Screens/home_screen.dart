@@ -21,12 +21,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
           "Food Delivery",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: screenWidth * 0.05,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           IconButton(
@@ -38,53 +44,54 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 40,
-
+              height: screenHeight * 0.05,
               decoration: BoxDecoration(
                 color: Colors.red.shade50,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(screenWidth * 0.03),
               ),
               child: TextField(
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     borderSide: BorderSide(
                       color: Colors.grey.withOpacity(0.1),
                       width: 1,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     borderSide: BorderSide(
                       color: Colors.grey.withOpacity(0.1),
                       width: 1,
                     ),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     borderSide: BorderSide(
                       color: Colors.grey.withOpacity(0.1),
                       width: 1,
                     ),
                   ),
-
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.02,
+                    ),
                     child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.search, color: Colors.red.shade300),
-                        SizedBox(width: 5),
+                        SizedBox(width: screenWidth * 0.01),
                         Text(
                           "Search for foods",
                           style: TextStyle(
                             color: Colors.red.shade300,
-                            fontSize: 15,
+                            fontSize: screenWidth * 0.035,
                           ),
                         ),
                       ],
@@ -93,11 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 15),
+            SizedBox(height: screenHeight * 0.015),
             CarouselSlider(
               options: CarouselOptions(
                 autoPlay: true,
-                height: 250,
+                height: screenHeight * 0.3,
                 viewportFraction: 1,
               ),
               items:
@@ -108,22 +115,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 150,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              width: screenWidth,
+                              height: screenHeight * 0.18,
+                              margin: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.01,
+                              ),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(
+                                  screenWidth * 0.025,
+                                ),
                                 image: DecorationImage(
                                   image: AssetImage(item['image']!),
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
-
+                            SizedBox(height: screenHeight * 0.01),
                             Text(
                               item['text']!,
-                              style: TextStyle(fontSize: 20.0),
+                              style: TextStyle(fontSize: screenWidth * 0.045),
                             ),
                           ],
                         );
@@ -131,12 +141,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }).toList(),
             ),
+            SizedBox(height: screenHeight * 0.01),
             Text(
               "Featured Items",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: screenWidth * 0.06,
+              ),
             ),
-            const SizedBox(height: 15),
-            // Buttons
+            SizedBox(height: screenHeight * 0.015),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -149,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                 ),
-                const SizedBox(width: 5),
+                SizedBox(width: screenWidth * 0.015),
                 CustomButton(
                   text: "Grid View",
                   isselected: !isListSelected,
@@ -161,16 +174,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-
-            // View Switcher
+            SizedBox(height: screenHeight * 0.01),
             Expanded(
               child:
                   isListSelected
                       ? ListView.separated(
                         itemCount: items1.length,
                         separatorBuilder:
-                            (context, index) => const SizedBox(height: 10),
+                            (context, index) =>
+                                SizedBox(height: screenHeight * 0.015),
                         itemBuilder: (context, index) {
                           return CustomListView(
                             image: items1[index]['image']!,
@@ -181,13 +193,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                       : GridView.builder(
                         itemCount: items1.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10,
-                              childAspectRatio: 2 / 3,
-                            ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: screenHeight * 0.015,
+                          crossAxisSpacing: screenWidth * 0.025,
+                          childAspectRatio: 2 / 3,
+                        ),
                         itemBuilder: (context, index) {
                           return CustomGridView(
                             image: items1[index]['image']!,
@@ -206,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 final List<Map<String, String>> items = [
   {'image': Myimages.burger, 'text': "burger"},
-  {'image': Myimages.nescalop, 'text': "nescalop"},
+  {'image': Myimages.pizza, 'text': "pizza"},
   {'image': Myimages.sandwitch, 'text': "sandwitch"},
 ];
 
@@ -217,9 +228,9 @@ List<Map<String, String>> items1 = [
     'subtitle': 'description for Burger',
   },
   {
-    'image': Myimages.nescalop,
-    'title': 'Nescalop',
-    'subtitle': 'description for Nescalop',
+    'image': Myimages.pizza,
+    'title': 'pizza',
+    'subtitle': 'description for pizza',
   },
   {
     'image': Myimages.sandwitch,
@@ -232,9 +243,9 @@ List<Map<String, String>> items1 = [
     'subtitle': 'description for Burger',
   },
   {
-    'image': Myimages.nescalop,
-    'title': 'Nescalop',
-    'subtitle': 'description for Nescalop',
+    'image': Myimages.pizza,
+    'title': 'pizza',
+    'subtitle': 'description for pizza',
   },
   {
     'image': Myimages.sandwitch,
