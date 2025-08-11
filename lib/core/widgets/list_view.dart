@@ -1,19 +1,19 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:food_delivery_app/models/cart_model.dart';
+import 'package:food_delivery_app/models/food_item.dart';
+import 'package:food_delivery_app/controllers/cart_controller.dart';
 
-class CustomListView extends StatelessWidget {
-  const CustomListView({
-    super.key,
-    required this.image,
-    required this.text1,
-    required this.text2,
-  });
+class CustomListView extends StatefulWidget {
+  const CustomListView({super.key, required this.foodItem});
 
-  final String image;
-  final String text1;
-  final String text2;
+  final FoodItem foodItem;
 
+  @override
+  State<CustomListView> createState() => _CustomListViewState();
+}
+
+class _CustomListViewState extends State<CustomListView> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -36,27 +36,27 @@ class CustomListView extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Image container
+          // صورة المنتج
           Container(
             width: screenWidth * 0.2,
             height: screenWidth * 0.2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(screenWidth * 0.02),
               image: DecorationImage(
-                image: AssetImage(image),
+                image: AssetImage(widget.foodItem.image),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           SizedBox(width: screenWidth * 0.025),
 
-          // Texts and button
+          // نصوص المنتج
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  text1,
+                  widget.foodItem.title,
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class CustomListView extends StatelessWidget {
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 Text(
-                  text2,
+                  widget.foodItem.subtitle,
                   style: TextStyle(
                     color: Colors.red.shade300,
                     fontSize: screenWidth * 0.035,
@@ -75,23 +75,49 @@ class CustomListView extends StatelessWidget {
             ),
           ),
 
-          // Add to cart button
+          // زرار إضافة للسلة
           SizedBox(
             height: screenHeight * 0.04,
             width: screenWidth * 0.25,
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: Colors.grey.shade300,
+                backgroundColor:
+                    widget.foodItem.isAddedToCart
+                        ? Colors.red.shade200
+                        : Colors.grey.shade300,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(screenWidth * 0.02),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
               ),
               onPressed: () {
-                print("Added to cart");
+                final cartItem = CartModel(
+                  id: widget.foodItem.id,
+                  quantity: 1,
+                  title: widget.foodItem.title,
+                  desc: widget.foodItem.subtitle,
+                  image: widget.foodItem.image,
+                );
+
+                if (widget.foodItem.isAddedToCart) {
+                  Provider.of<CartController>(
+                    context,
+                    listen: false,
+                  ).removeItemFromCart(cartItem);
+                } else {
+                  Provider.of<CartController>(
+                    context,
+                    listen: false,
+                  ).addItemToCart(cartItem);
+                }
+
+                setState(() {
+                  widget.foodItem.isAddedToCart =
+                      !widget.foodItem.isAddedToCart;
+                });
               },
               child: Text(
-                "Add to cart",
+                widget.foodItem.isAddedToCart ? "Remove" : "Add to cart",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: screenWidth * 0.03,

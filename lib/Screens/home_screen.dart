@@ -8,6 +8,7 @@ import 'package:food_delivery_app/core/functions/app_route.dart';
 import 'package:food_delivery_app/core/widgets/custom_button.dart';
 import 'package:food_delivery_app/core/widgets/grid_view.dart';
 import 'package:food_delivery_app/core/widgets/list_view.dart';
+import 'package:food_delivery_app/models/food_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -178,21 +179,17 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child:
                   isListSelected
-                      ? ListView.separated(
-                        itemCount: items1.length,
-                        separatorBuilder:
-                            (context, index) =>
-                                SizedBox(height: screenHeight * 0.015),
+                      ? ListView.builder(
+                        itemCount: FoodItem.foodItems.length,
+
                         itemBuilder: (context, index) {
                           return CustomListView(
-                            image: items1[index]['image']!,
-                            text1: items1[index]['title']!,
-                            text2: items1[index]['subtitle']!,
+                            foodItem: FoodItem.foodItems[index],
                           );
                         },
                       )
                       : GridView.builder(
-                        itemCount: items1.length,
+                        itemCount: FoodItem.foodItems.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: screenHeight * 0.015,
@@ -201,9 +198,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         itemBuilder: (context, index) {
                           return CustomGridView(
-                            image: items1[index]['image']!,
-                            text1: items1[index]['title']!,
-                            text2: items1[index]['subtitle']!,
+                            image: FoodItem.foodItems[index].image,
+                            text1: FoodItem.foodItems[index].title,
+                            text2: FoodItem.foodItems[index].subtitle,
                           );
                         },
                       ),
@@ -219,37 +216,4 @@ final List<Map<String, String>> items = [
   {'image': Myimages.burger, 'text': "burger"},
   {'image': Myimages.pizza, 'text': "pizza"},
   {'image': Myimages.sandwitch, 'text': "sandwitch"},
-];
-
-List<Map<String, String>> items1 = [
-  {
-    'image': Myimages.burger,
-    'title': "Burger",
-    'subtitle': 'description for Burger',
-  },
-  {
-    'image': Myimages.pizza,
-    'title': 'pizza',
-    'subtitle': 'description for pizza',
-  },
-  {
-    'image': Myimages.sandwitch,
-    'title': 'Sandwitch',
-    'subtitle': 'description for Sandwitch',
-  },
-  {
-    'image': Myimages.burger,
-    'title': "Burger",
-    'subtitle': 'description for Burger',
-  },
-  {
-    'image': Myimages.pizza,
-    'title': 'pizza',
-    'subtitle': 'description for pizza',
-  },
-  {
-    'image': Myimages.sandwitch,
-    'title': 'Sandwitch',
-    'subtitle': 'description for Sandwitch',
-  },
 ];
