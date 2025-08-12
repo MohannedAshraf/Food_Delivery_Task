@@ -8,15 +8,28 @@ class CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(cartItem.title),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      title: Text(
+        cartItem.title,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
       subtitle: Text(cartItem.desc),
-      leading: Image.asset(cartItem.image, height: 70, width: 70),
-      trailing: Row(
-        children: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.add)),
-          Text('1'),
-          IconButton(onPressed: () {}, icon: Icon(Icons.remove)),
-        ],
+      leading: Image.asset(
+        cartItem.image,
+        height: 70,
+        width: 70,
+        fit: BoxFit.cover,
+      ),
+      trailing: SizedBox(
+        width: 120,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+            const Text('1'),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.remove)),
+          ],
+        ),
       ),
     );
   }

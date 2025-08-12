@@ -9,9 +9,8 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartController = Provider.of<CartController>(context);
+    final cartController = Provider.of<CartController>(context, listen: true);
 
-    // حالة السلة الفارغة
     if (cartController.cartItems.isEmpty) {
       return Scaffold(
         appBar: AppBar(
@@ -38,51 +37,51 @@ class CheckoutScreen extends StatelessWidget {
           ),
         ),
       );
+    } else {
+      return Scaffold(
+        appBar: AppBar(centerTitle: true, title: const Text("Cart")),
+        body: Column(
+          children: [
+            // القائمة بتاخد المساحة المتبقية
+            Expanded(
+              child: ListView.builder(
+                itemCount: cartController.cartItems.length,
+                itemBuilder: (context, index) {
+                  final cartItem = cartController.cartItems[index];
+                  return CartItemWidget(cartItem: cartItem);
+                },
+              ),
+            ),
+
+            // تفاصيل الطلب
+            const ListTile(title: Text('Subtotal'), trailing: Text('\$25.00')),
+            const ListTile(
+              title: Text('Delivery Fee'),
+              trailing: Text('\$25.00'),
+            ),
+            const ListTile(title: Text('Tax'), trailing: Text('\$25.00')),
+            const ListTile(title: Text('Total'), trailing: Text('\$25.00')),
+
+            // زر الدفع
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: ElevatedButton(
+                onPressed: () {
+                  // تنفيذ عملية الدفع
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffE82933),
+                  fixedSize: const Size(200, 48),
+                ),
+                child: const Text(
+                  'Checkout',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
     }
-
-    return Scaffold(
-      appBar: AppBar(centerTitle: true, title: const Text("Cart")),
-      body: Column(
-        children: [
-          // قائمة العناصر
-          Expanded(
-            child: ListView.builder(
-              itemCount: cartController.cartItems.length,
-              itemBuilder: (context, index) {
-                final cartItem = cartController.cartItems[index];
-                return CartItemWidget(cartItem: cartItem);
-              },
-            ),
-          ),
-
-          // تفاصيل الطلب
-          const ListTile(title: Text('Subtotal'), trailing: Text('\$25.00')),
-          const ListTile(
-            title: Text('Delivery Fee'),
-            trailing: Text('\$25.00'),
-          ),
-          const ListTile(title: Text('Tax'), trailing: Text('\$25.00')),
-          const ListTile(title: Text('Total'), trailing: Text('\$25.00')),
-
-          // زر الدفع
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: ElevatedButton(
-              onPressed: () {
-                // تنفيذ عملية الدفع
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xffE82933),
-                fixedSize: const Size(200, 48),
-              ),
-              child: const Text(
-                'Checkout',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
