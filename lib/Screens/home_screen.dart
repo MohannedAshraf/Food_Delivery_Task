@@ -198,9 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         itemBuilder: (context, index) {
                           return CustomGridView(
-                            image: FoodItem.foodItems[index].image,
-                            text1: FoodItem.foodItems[index].title,
-                            text2: FoodItem.foodItems[index].subtitle,
+                            foodItem: FoodItem.foodItems[index],
                           );
                         },
                       ),
