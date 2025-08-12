@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/controllers/cart_controller.dart';
 import 'package:food_delivery_app/models/cart_model.dart';
+import 'package:provider/provider.dart';
 
 class CartItemWidget extends StatelessWidget {
   final CartModel cartItem;
+
   const CartItemWidget({super.key, required this.cartItem});
 
   @override
   Widget build(BuildContext context) {
+    final cartController = Provider.of<CartController>(context, listen: false);
+
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       title: Text(
@@ -25,9 +30,20 @@ class CartItemWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-            const Text('1'),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.remove)),
+            //add or  remove button
+            IconButton(
+              onPressed: () {
+                cartController.increaseQuantity(cartItem);
+              },
+              icon: const Icon(Icons.add),
+            ),
+            Text('${cartItem.quantity}'),
+            IconButton(
+              onPressed: () {
+                cartController.decreaseQuantity(cartItem);
+              },
+              icon: const Icon(Icons.remove),
+            ),
           ],
         ),
       ),

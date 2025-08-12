@@ -19,6 +19,11 @@ class _CustomListViewState extends State<CustomListView> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
+    final cartController = Provider.of<CartController>(context);
+    final isInCart = cartController.cartItems.any(
+      (item) => item.id == widget.foodItem.id,
+    );
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
       padding: EdgeInsets.all(screenWidth * 0.02),
@@ -36,7 +41,6 @@ class _CustomListViewState extends State<CustomListView> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // صورة المنتج
           Container(
             width: screenWidth * 0.2,
             height: screenWidth * 0.2,
@@ -50,7 +54,7 @@ class _CustomListViewState extends State<CustomListView> {
           ),
           SizedBox(width: screenWidth * 0.025),
 
-          // نصوص المنتج
+          //product
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,16 +79,14 @@ class _CustomListViewState extends State<CustomListView> {
             ),
           ),
 
-          // زرار إضافة للسلة
+          //add to cart button
           SizedBox(
             height: screenHeight * 0.04,
             width: screenWidth * 0.25,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor:
-                    widget.foodItem.isAddedToCart
-                        ? Colors.red.shade200
-                        : Colors.grey.shade300,
+                    isInCart ? Colors.red.shade200 : Colors.grey.shade300,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(screenWidth * 0.02),
                 ),
@@ -97,27 +99,17 @@ class _CustomListViewState extends State<CustomListView> {
                   title: widget.foodItem.title,
                   desc: widget.foodItem.subtitle,
                   image: widget.foodItem.image,
+                  price: widget.foodItem.price,
                 );
 
-                if (widget.foodItem.isAddedToCart) {
-                  Provider.of<CartController>(
-                    context,
-                    listen: false,
-                  ).removeItemFromCart(cartItem);
+                if (isInCart) {
+                  cartController.removeItemFromCart(cartItem);
                 } else {
-                  Provider.of<CartController>(
-                    context,
-                    listen: false,
-                  ).addItemToCart(cartItem);
+                  cartController.addItemToCart(cartItem);
                 }
-
-                setState(() {
-                  widget.foodItem.isAddedToCart =
-                      !widget.foodItem.isAddedToCart;
-                });
               },
               child: Text(
-                widget.foodItem.isAddedToCart ? "Remove" : "Add to cart",
+                isInCart ? "Remove" : "Add to cart",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: screenWidth * 0.03,
